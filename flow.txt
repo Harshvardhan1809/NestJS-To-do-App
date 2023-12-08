@@ -1,0 +1,2 @@
+1. Connect to DB
+2. Write APIs to fetch data from DB
