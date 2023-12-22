@@ -3,23 +3,23 @@ import { AppController } from '../controllers/app.controller';
 import { AppService } from '../services/app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { UserModule } from './user.module';
+import { TaskModule } from './task.module';
+import { ConfigModule } from '@nestjs/config';
+import { typeOrmConfig } from 'config/typeorm.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 9010,
-      username: 'root',
-      password: 'MySQL@root@password@2002',
-      database: 'golang_api',
-      entities: [],
-      synchronize: false,
+    TypeOrmModule.forRoot(typeOrmConfig),
+    ConfigModule.forRoot({
+      envFilePath: ['./../.env.example'],
     }),
+    UserModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {}
+  constructor(private dataSource: DataSource) {} // dependency injection
 }
