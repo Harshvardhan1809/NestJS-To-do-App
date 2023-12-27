@@ -3,7 +3,7 @@ import { Task } from './../src/entities/task.entity';
 import { DataSourceOptions } from 'typeorm';
 
 const typeOrmBaseConfig = {
-  port: 9010,
+  port: 3306,
   username: 'user',
   password: 'password',
   database: 'nest_api',

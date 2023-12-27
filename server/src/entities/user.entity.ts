@@ -35,15 +35,21 @@ export class User {
   setDates() {
     this.created_at = new Date();
   }
+
+  @BeforeInsert()
   async hashPassword() {
-    const hash = await bcrypt.hash(this.password, process.env['HASHSALT']);
+    const data: string = this.password;
+    const hash = await bcrypt.hash(data, 13);
     this.password = hash;
+    return;
   }
 
   @BeforeUpdate()
   updateDate() {
     this.updated_at = new Date();
   }
+
+  @BeforeUpdate()
   checkDate() {
     if (this.created_at == null)
       throw new Error('Creation date cannot be changed');

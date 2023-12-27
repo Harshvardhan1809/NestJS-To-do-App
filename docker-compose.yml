@@ -7,7 +7,7 @@ services:
     volumes: 
       - ./volumes/mysql-data:/var/lib/mysql
     ports: 
-      - 9010:3306
+      - 3306:3306
     environment: 
       MYSQL_PASSWORD: password
       MYSQL_USER: user

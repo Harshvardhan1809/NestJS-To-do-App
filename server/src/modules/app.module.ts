@@ -7,6 +7,7 @@ import { UserModule } from './user.module';
 import { TaskModule } from './task.module';
 import { ConfigModule } from '@nestjs/config';
 import { typeOrmConfig } from 'config/typeorm.config';
+import { AuthModule } from './auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { typeOrmConfig } from 'config/typeorm.config';
     }),
     UserModule,
     TaskModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
