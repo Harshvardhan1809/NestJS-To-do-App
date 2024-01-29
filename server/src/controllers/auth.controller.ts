@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, Req } from '@nestjs/common';
+import { Controller, Post, Get, Body, Res, Req } from '@nestjs/common';
 import { User } from 'src/entities/user.entity';
 import { AuthService } from 'src/services/auth.service';
 import { Response, Request } from 'express';
@@ -51,9 +51,13 @@ export class AuthController {
     return resp;
   }
 
-  @Post('check_auth')
+  @Post('logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    return this.authService.logout(response);
+  }
+
+  @Get('check_auth')
   async checkAuth(@Req() request: Request): Promise<User | null> {
-    console.log(request.cookies);
     return await this.authService.checkAuth(request.cookies);
   }
 }

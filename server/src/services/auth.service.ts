@@ -1,7 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from './user.service';
 import { User } from 'src/entities/user.entity';
+import { Response } from 'express';
 
 interface AuthReturnBody {
   user: User;
@@ -55,7 +56,18 @@ export class AuthService {
   }
 
   async checkAuth(cookie: any): Promise<User | null> {
+    if (!cookie || Object.keys(cookie).length === 0) {
+      throw new HttpException('User not found', 404);
+    }
     const claims = await this.jwtService.decode(cookie.jwt);
+    if (!claims || Object.keys(claims).length === 0) {
+      throw new HttpException('User not found', 404);
+    }
     return await this.userService.findOne(claims.sub);
+  }
+
+  logout(response: Response) {
+    response.clearCookie('jwt');
+    return;
   }
 }
