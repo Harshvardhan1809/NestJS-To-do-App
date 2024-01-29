@@ -28,7 +28,7 @@ const useLogoutMutation = ({navigate}: Options) => {
             navigate("/login");
         }, 
         onError: () => {
-            console.log("Getting error for login mutation")
+            console.log("Getting error for logout mutation")
             navigate("");
         }
       })

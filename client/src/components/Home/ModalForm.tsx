@@ -57,6 +57,7 @@ const ModalForm = (props: {open: boolean, handleClose: () => void}) => {
     const value = dayjs();
 
     const checkSessionQuery = useCheckSessionQuery();
+    console.log(checkSessionQuery.data);
     const createTaskMutation = useCreateTaskMutation(handleClose);
 
     const starColor: string = useMemo(() => {
@@ -94,7 +95,7 @@ const ModalForm = (props: {open: boolean, handleClose: () => void}) => {
                         </Box>
                         
                         <StyledButtonDiv>
-                            <Button variant="outlined" onClick={() => { createTaskMutation.mutate({...formData, user_id: checkSessionQuery.data.ID}) }}>Create task</Button>
+                            <Button variant="outlined" onClick={() => { createTaskMutation.mutate({...formData, userId: checkSessionQuery.data.id}) }}>Create task</Button>
                             <Button variant="outlined" onClick={() =>  setFormData({title: "", description: "", starred: false, created_at: dayjs(), status:"incomplete"}) }>Clear</Button>
                         </StyledButtonDiv>
 

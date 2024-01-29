@@ -6,7 +6,7 @@ import { type Dayjs } from "dayjs";
 import { queryClient } from "../utils/queryClient";
 
 export interface CreateTaskFormDataType {
-    user_id: number,
+    userId: number,
     title: string,
     description: string,
     starred: boolean,
@@ -19,7 +19,7 @@ const useCreateTaskMutation = (handleClose: () => void) => {
         mutationKey: ["create_task"],
         mutationFn: async (data: CreateTaskFormDataType) => {
             const body = JSON.stringify(data);
-            const create = await axios.post(`http://localhost:9010/task/${data.user_id}/`, body, config)
+            const create = await axios.post(`http://localhost:9010/task/create`, body, config)
             return create;
         },  
         onSuccess: () => {
