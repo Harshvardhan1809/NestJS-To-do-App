@@ -15,7 +15,9 @@ export class TaskService {
     let day: number | Date = Date.parse(date);
     let nextDay: number | Date = day + 86400 * 1000; // 1000*60*60*24
     day = new Date(day);
+    day.setHours(day.getHours() - 9);
     nextDay = new Date(nextDay);
+    nextDay.setHours(nextDay.getHours() - 9);
     return [day, nextDay];
   }
 

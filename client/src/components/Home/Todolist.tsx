@@ -6,11 +6,13 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ButtonBase from '@mui/material/ButtonBase';
-import { DatePicker } from "@mui/x-date-pickers";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import useFetchTaskByUserIDDateQuery from "../../hooks/useFetchTaskByUserQuery";
 import useCheckSessionQuery from "../../hooks/useCheckSessionQuery";
 import useUpdateTaskMutation from "../../hooks/useUpdateTaskMutation";
 import useDeleteTaskMutation from "../../hooks/useDeleteTaskMutation";
+// import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { queryClient } from "../../utils/queryClient";
 
 import dayjs, {type Dayjs} from 'dayjs';
@@ -37,11 +39,12 @@ const TodoList = (props: { modalOpen : () => void, date: string, setDate: Dispat
 
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <CardHeader title="Tasks for " sx={{ textAlign: "center" }}/>
-                    <DatePicker
+                    <DesktopDatePicker
+                        value={dayjs(date)}
+                        selectedSections={"all"}
+                        showDaysOutsideCurrentMonth={false}
                         onChange={(e: any) =>{ 
-                            console.log("Print date from datepicker", e)
                             const date: Dayjs = dayjs().year(e.$y).month(e.$M).date(e.$D)
-                            console.log(date)
                             setDate(date.format("YYYY-MM-DD HH:mm:ss"))
                         }}
                     />

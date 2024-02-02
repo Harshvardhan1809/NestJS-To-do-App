@@ -2,10 +2,12 @@ import React, { type BaseSyntheticEvent, Fragment, useState, useMemo } from "rea
 import { Dialog, TextField, styled, Button, Typography, Box } from "@mui/material";
 import CreateIcon from '@mui/icons-material/Create';
 import StarIcon from '@mui/icons-material/Star';
-import { DatePicker } from "@mui/x-date-pickers";
+import { DatePicker, DesktopDatePicker } from "@mui/x-date-pickers";
 import dayjs, { type Dayjs } from 'dayjs';
 import useCreateTaskMutation from "../../hooks/useCreateTaskMutation";
 import useCheckSessionQuery from "../../hooks/useCheckSessionQuery";
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
 
 // attempt to reduce the inline CSS
 // can't use makeStyles since it is depreacted (@mui/styles)
@@ -57,7 +59,6 @@ const ModalForm = (props: {open: boolean, handleClose: () => void}) => {
     const value = dayjs();
 
     const checkSessionQuery = useCheckSessionQuery();
-    console.log(checkSessionQuery.data);
     const createTaskMutation = useCreateTaskMutation(handleClose);
 
     const starColor: string = useMemo(() => {
@@ -91,11 +92,22 @@ const ModalForm = (props: {open: boolean, handleClose: () => void}) => {
 
                         <Box sx={{"display": "flex", "width": "100%", marginLeft: "75px"}}>
                             <StyledImportantField> Date :</StyledImportantField>
-                            <DatePicker value={formData.created_at} onChange={(e: any) =>{ setFormData({...formData, created_at: e.format('YYYY-MM-DD HH:mm:ss')}) }} />
+                            <DesktopDatePicker
+                                value={formData.created_at}
+                                showDaysOutsideCurrentMonth={false}
+                                onChange={(e: any) =>{ 
+                                    console.log("Print date from modal form ", e);
+                                    // console.log("Print formatted date from modal form ", e.format('YYYY-MM-DD HH:mm:ss'))
+                                    const date: Dayjs = dayjs().year(e.$y).month(e.$M).date(e.$D)
+                                    setFormData({...formData, created_at: date}) // e.format('YYYY-MM-DD HH:mm:ss')
+                                }}
+                            />
                         </Box>
                         
                         <StyledButtonDiv>
-                            <Button variant="outlined" onClick={() => { createTaskMutation.mutate({...formData, userId: checkSessionQuery.data.id}) }}>Create task</Button>
+                            <Button variant="outlined" onClick={() => { 
+                                    createTaskMutation.mutate({...formData, userId: checkSessionQuery.data.id}) 
+                                }}>Create task</Button>
                             <Button variant="outlined" onClick={() =>  setFormData({title: "", description: "", starred: false, created_at: dayjs(), status:"incomplete"}) }>Clear</Button>
                         </StyledButtonDiv>
 
