@@ -4,7 +4,7 @@ import { config } from "../utils/axios";
 import dayjs, { type Dayjs } from "dayjs";
 import dayjsPluginUTC from 'dayjs-plugin-utc'
 import { queryClient } from "../utils/queryClient";
-dayjs.extend(dayjsPluginUTC);
+// dayjs.extend(dayjsPluginUTC);
 
 type UpdateTaskQuery = { 
     user_id: number,

@@ -11,14 +11,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/ja';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs, {type Dayjs} from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-dayjs.extend(timezone);
-dayjs.tz.setDefault('Asia/Tokyo');
 
 const Home = () => {
 
     const [modalOpen, setModalOpen] =  useState(false);
-    const [date, setDate] = useState<string>(dayjs().format("YYYY-MM-DD"));
+    // maintain state in UTC format
+    const [date, setDate] = useState<string>(dayjs().format("YYYY-MM-DD HH:mm:ss"));
     const handleOpen = () => setModalOpen(true);
     const handleClose = () =>  setModalOpen(false);
 
@@ -42,3 +40,5 @@ const Home = () => {
 }
 
 export default Home
+
+// 

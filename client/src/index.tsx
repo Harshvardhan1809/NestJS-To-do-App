@@ -11,13 +11,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>
-    </LocalizationProvider> 
   </React.StrictMode>,
 )
