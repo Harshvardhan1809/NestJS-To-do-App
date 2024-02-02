@@ -14,9 +14,9 @@ const useDeleteTaskMutation = () => {
         mutationKey: ["create_task"],
         mutationFn: async (data: DeleteTaskFormDataType) => {
             const options = {
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                // headers: {
+                //     "Content-Type": "application/json"
+                // },
                 withCredentials : true, 
                 data: data.task_id
             }

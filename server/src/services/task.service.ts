@@ -32,14 +32,18 @@ export class TaskService {
   }
 
   // YYYY-MM-DD,
-  findByUserIdDate(date: string, user_id: number): Promise<Task[] | null> {
+  async findByUserIdDate(
+    date: string,
+    user_id: number,
+  ): Promise<Task[] | null> {
     const days: Date[] = this.dayCalculator(date);
-    return this.taskRepository.find({
+    const tasks = await this.taskRepository.find({
       where: {
         created_at: Between(days[0], days[1]),
         userId: user_id,
       },
     });
+    return tasks;
   }
 
   findPrevByUserId(user_id: number): Promise<Task[] | null> {
@@ -63,11 +67,12 @@ export class TaskService {
 
   async update(id, task: Partial<Task>): Promise<Task | null> {
     const t: Task = await this.taskRepository.findOneBy({ id: id });
-    return await this.taskRepository.save({
+    const obj = {
       id: id,
       ...t,
       ...task,
-    });
+    };
+    return await this.taskRepository.save(obj);
   }
 
   async remove(id: number): Promise<void> {

@@ -27,7 +27,7 @@ const TodoList = (props: { modalOpen : () => void, date: string, setDate: Dispat
     }, [date])
 
     const checkSessionQuery = useCheckSessionQuery();
-    const fetchTaskByUserQuery = useFetchTaskByUserIDDateQuery({user_id: checkSessionQuery.data.ID, date: date});
+    const fetchTaskByUserQuery = useFetchTaskByUserIDDateQuery({user_id: checkSessionQuery.data.id, date: date});
     const updateTaskMutation = useUpdateTaskMutation();
     const deleteTaskMutation = useDeleteTaskMutation();
 
@@ -72,10 +72,10 @@ const TodoList = (props: { modalOpen : () => void, date: string, setDate: Dispat
                                     </Box>
                                     <Box sx={{ display: "flex", marginLeft: "auto" }}>
                                         <Tooltip title="Star as important">
-                                            <StarIcon sx={{ margin: "auto 15px auto 0px", color: `${color}`}} onClick={() => updateTaskMutation.mutate({...task, status: "incomplete", starred: !task.starred, UpdatedAt: dayjs(), ID: task.ID})}/>
+                                            <StarIcon sx={{ margin: "auto 15px auto 0px", color: `${color}`}} onClick={() => updateTaskMutation.mutate({...task, status: "incomplete", starred: !task.starred, UpdatedAt: dayjs(), ID: task.id})}/>
                                         </Tooltip> 
-                                        <Button variant="contained" onClick={() => updateTaskMutation.mutate({...task, status: "complete", CompletedAt: dayjs(), UpdatedAt: dayjs(), ID: task.ID}) }>DONE</Button>
-                                        <Button variant="contained" color="error" sx={{ margin: "0px 0px 0px 10px" }} onClick={() => deleteTaskMutation.mutate({task_id: task.ID})}>DELETE</Button>
+                                        <Button variant="contained" onClick={() => updateTaskMutation.mutate({...task, status: "completed", CompletedAt: dayjs(), UpdatedAt: dayjs(), ID: task.id}) }>DONE</Button>
+                                        <Button variant="contained" color="error" sx={{ margin: "0px 0px 0px 10px" }} onClick={() => deleteTaskMutation.mutate({task_id: task.id})}>DELETE</Button>
                                     </Box>
                                 </Box>
                             )
@@ -90,7 +90,7 @@ const TodoList = (props: { modalOpen : () => void, date: string, setDate: Dispat
                     { 
                         fetchTaskByUserQuery.data && (fetchTaskByUserQuery.data as Array<any>)?.map((task: any, idx: number) => {
                             const color: string = (task.starred === true) ? "gold" : "gray";
-                            if (task.status === "complete") {
+                            if (task.status === "completed") {
                                 const color: string = (task.starred === true) ? "gold" : "gray";
                                 return (
                                     <Box key={idx} sx={{ margin: "0px 50px 10px 50px", display: "flex", border: "solid", borderRadius: "5px", borderWidth: "1px", borderColor: "gray", padding: "7.5px 10px 7.5px 20px" }}>
